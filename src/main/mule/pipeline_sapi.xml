@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="pipeline_sapiFlow" doc:id="565d5615-548e-4da1-9db7-54ed59743e97" >
+		<http:listener doc:name="Listener" doc:id="aa919eba-7d62-4671-a43f-9974f2589ff6" config-ref="HTTP_Listener_config_SAPI" path="/api"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bec6e414-ce62-4920-a80e-645e8282865f" message="pipeline_sapiFlow -ENTRY"/>
+		<ee:transform doc:name="Transform Message" doc:id="9a9c7ef1-bfc0-4986-a8fd-96a127949974" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Status" :"Success",
+	"Text" : "System API Called Successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1f4007d3-7a0d-4f22-af70-dc03f34f8f5b" message="pipeline_sapiFlow -EXIT"/>
+	</flow>
+</mule>
